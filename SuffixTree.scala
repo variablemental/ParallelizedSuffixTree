@@ -16,9 +16,10 @@ class SuffixTree(rootNode:Node) {
   private var result:String=null
   def insert(start:Int,end:Int): Node ={
     if(oldnode.getEdges().contains(start)&&oldnode.getEdge(start).getEnd()==end)
-      oldnode.getEdge(start).getDestination()
+      oldnode=oldnode.getEdge(start).getDestination()
     else
       oldnode=oldnode.addChild(start,end)
+    println("Insert")
     oldnode
   }
 
@@ -26,18 +27,23 @@ class SuffixTree(rootNode:Node) {
   def printLeaf(node:Node): Unit = {
     if(node.getEdges().isEmpty) {
       node.getParent().getEdges().foreach(println(_))
-      var tempNode=node
-        while(tempNode.getParent()!=root)
+/*      var tempNode=node
+        while(tempNode.getParent()!=null&&tempNode.getParent()!=root)
           tempNode=tempNode.getParent()
       (root.getEdges().foreach(
         k=> if(k._2.getDestination()==tempNode) result+=k._2.getStart().toString else result+""
-      ))
+      ))*/
     }
     else {
       node.getEdges().foreach(
         key=>printLeaf(key._2.getDestination())
       )
     }
+  }
+  def printRoot()={
+    root.getEdges().foreach(
+      key=>println(key._1)
+    )
   }
 
   def getResult()=result

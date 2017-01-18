@@ -9,7 +9,7 @@ import scala.tools.cmd.gen.AnyVals
   */
 object ParaelledSuffixTree extends Serializable{
 
-  val L=10
+    val L=10
 
   /**
     * 求最长公共字串长度
@@ -49,7 +49,7 @@ object ParaelledSuffixTree extends Serializable{
           len=i
           offdex=0
         }
-        else if(offdex+1<str.length)
+        else
           offdex=str.indexOf(ch,offdex+1)
       }
     }
@@ -133,12 +133,15 @@ object ParaelledSuffixTree extends Serializable{
       }
     }
     val record=forestRDD.map{pre =>
+      pre.foreach(tree=>println(tree.getRoot()))
       pre.foreach(tree=>tree.printLeaf(tree.getRoot()))
+      pre.foreach(tree=>tree.printRoot())
+      pre.foreach(tree=>tree.getResult())
       val arr=ArrayBuffer[String]()
       var str:String=null
-      pre.foreach(tree=>(str+=tree.getResult()))
+      pre.foreach(tree=>(arr+=tree.getResult()))
       str+""
-      //arr.toArray
+      arr.toArray
     }.saveAsTextFile("/home/coder-z/exset2")
 
 
